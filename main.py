@@ -4,12 +4,15 @@ from fastapi.security import OAuth2PasswordRequestForm
 
 from fastapi.middleware.cors import CORSMiddleware
 from extend.db import engine,SessionLocal,Base
-
+from sqlalchemy.orm import Session
+from extend.get_db import get_db
 app = FastAPI(
     title="知了网盘分享系统",
     description="知了网盘分享系统"
 )
 
+
+#跨域请求
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -26,7 +29,7 @@ Base.metadata.create_all(bind=engine)
 
 
 @app.post("/login")
-def Login(user:OAuth2PasswordRequestForm=Depends()):
+def Login(user:OAuth2PasswordRequestForm=Depends(),db:Session=Depends(get_db)):
     #1.用户信息获取
     username=user.username
     pwd=user.password
