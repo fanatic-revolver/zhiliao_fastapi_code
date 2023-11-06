@@ -13,6 +13,7 @@ from utils import token
 from datetime import timedelta
 from apps.user.views import router as user_router
 from apps.department.views import router as department_router
+from apps.role.views import router as role_router
 from fastapi.staticfiles import StaticFiles
 import datetime
 
@@ -28,6 +29,7 @@ app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
 app.include_router(user_router)
 app.include_router(department_router)
+app.include_router(role_router)
 
 # 跨域请求
 app.add_middleware(

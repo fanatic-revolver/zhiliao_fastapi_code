@@ -128,7 +128,7 @@ def query(
     return content
 
 @router.get("/get_departments",tags=["用户模块"])
-def get_department_data(db:Session = Depends(get_db)):
+def get_department_data(db:Session = Depends(get_db),user_id: str = Depends(token.parse_token)):
     departments=get_departments(db)
     return {"code":200,"msg":"部门查询成功","departments":departments}
 
